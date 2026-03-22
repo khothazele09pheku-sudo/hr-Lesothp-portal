@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Lesotho | Culture - Where We Shine Together</title>
+    <style>
+        /* Purple & Stars Theme for Culture Page */
+        .culture-page {
+            background: linear-gradient(135deg, #4a0e4e 0%, #7b2c7d 50%, #9b4d96 100%);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Star Animation Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Shooting Star Effect */
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(-100px) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #ffd966, #ffaa33);
+            box-shadow: 0 0 10px #ffd966;
+            animation: shoot 3s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ========== CENTERED HEADER ========== */
+        .centered-header {
+            background: rgba(74, 14, 78, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #ffd966;
+        }
+
+        .header-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .logo-centered {
+            text-align: center;
+        }
+
+        .logo-centered h1 {
+            color: #ffd966;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .logo-centered p {
+            color: #ffdd99;
+            font-size: 0.85rem;
+        }
+
+        /* BOLD CAPITAL NAVIGATION LINKS */
+        .nav-centered {
+            width: 100%;
+        }
+
+        .nav-links-centered {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            list-style: none;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links-centered a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 5px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links-centered a:hover,
+        .nav-links-centered a.active {
+            border-bottom-color: #ffd966;
+            color: #ffd966;
+            transform: translateY(-2px);
+        }
+
+        /* Purple Hero Section */
+        .hero-culture {
+            background: linear-gradient(135deg, #6a1b6e 0%, #9b2e96 50%, #c94fc1 100%);
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            border-bottom: 3px solid #ffd966;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero-culture h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            animation: float 3s ease-in-out infinite;
+            color: #ffdd99;
+        }
+
+        .hero-culture p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            color: white;
+        }
+
+        /* ========== HORIZONTAL STAFF GALLERY ========== */
+        .horizontal-staff {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            gap: 35px;
+            margin: 60px 0;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+
+        .horizontal-staff-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,245,255,0.98) 100%);
+            border-radius: 25px;
+            padding: 25px 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #ffd966;
+            animation: float 4s ease-in-out infinite;
+            backdrop-filter: blur(5px);
+        }
+
+        .horizontal-staff-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.35);
+            border-color: #ffaa66;
+        }
+
+        .horizontal-staff-card:nth-child(1) { animation-delay: 0s; }
+        .horizontal-staff-card:nth-child(2) { animation-delay: 0.2s; }
+        .horizontal-staff-card:nth-child(3) { animation-delay: 0.4s; }
+        .horizontal-staff-card:nth-child(4) { animation-delay: 0.6s; }
+
+        .horizontal-staff-card img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #ffd966;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .horizontal-staff-card:hover img {
+            transform: scale(1.05);
+            border-color: #ffaa66;
+        }
+
+        .horizontal-staff-card h4 {
+            font-size: 1.2rem;
+            color: #4a0e4e;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .horizontal-staff-card p {
+            font-size: 0.85rem;
+            color: #6b2e6e;
+            font-weight: 500;
+        }
+
+        .role-badge {
+            background: linear-gradient(135deg, #ffd966, #ffaa33);
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #4a0e4e;
+            margin-top: 10px;
+        }
+
+        .quote-text {
+            font-size: 0.75rem;
+            margin-top: 10px;
+            color: #5a2e5e;
+            font-style: italic;
+        }
+
+        /* Purple Cards Grid */
+        .purple-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin: 60px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .purple-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(250,240,250,0.95) 100%);
+            border-radius: 25px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 2px solid #ffd966;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .purple-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            border-color: #ffaa66;
+        }
+
+        .purple-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .purple-card-content {
+            padding: 25px;
+        }
+
+        .purple-card-content h3 {
+            color: #4a0e4e;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        /* Culture Values List */
+        .culture-values {
+            background: linear-gradient(135deg, rgba(106,27,110,0.98) 0%, rgba(155,46,150,0.98) 100%);
+            padding: 40px;
+            border-radius: 25px;
+            margin: 60px 0;
+            position: relative;
+            z-index: 2;
+            border: 2px solid #ffd966;
+            backdrop-filter: blur(5px);
+        }
+
+        .culture-values h3 {
+            color: #ffd966;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            list-style: none;
+        }
+
+        .values-list li {
+            background: rgba(255,255,255,0.15);
+            padding: 18px;
+            border-radius: 20px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid #ffd966;
+        }
+
+        .values-list li:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(10px);
+        }
+
+        /* ========== CENTERED FOOTER - BOLD CAPITAL TEXT ========== */
+        .centered-footer {
+            background: linear-gradient(135deg, rgba(74,14,78,0.98) 0%, rgba(106,27,110,0.98) 100%);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 35px 0;
+            margin-top: auto;
+            border-top: 3px solid #ffd966;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-centered p {
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-main-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd966;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ffdd99;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffd966;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-size: 0.75rem;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        /* Main content wrapper */
+        .main-content {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-culture h2 {
+                font-size: 1.8rem;
+            }
+            .hero-culture p {
+                font-size: 1rem;
+            }
+            .horizontal-staff-card {
+                width: 260px;
+                padding: 20px;
+            }
+            .horizontal-staff-card img {
+                width: 130px;
+                height: 130px;
+            }
+            .horizontal-staff-card h4 {
+                font-size: 1rem;
+            }
+            .nav-links-centered {
+                gap: 20px;
+            }
+            .nav-links-centered a {
+                font-size: 0.8rem;
+            }
+            .logo-centered h1 {
+                font-size: 1.5rem;
+            }
+            .culture-values h3 {
+                font-size: 1.5rem;
+            }
+            .values-list li {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .horizontal-staff {
+                flex-direction: column;
+                align-items: center;
+            }
+            .horizontal-staff-card {
+                width: 280px;
+            }
+            .nav-links-centered {
+                gap: 12px;
+            }
+            .footer-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body class="culture-page">
+
+    <!-- Star Animation Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- CENTERED HEADER WITH BOLD CAPITAL NAVIGATION -->
+    <header class="centered-header">
+        <div class="container header-centered">
+            <div class="logo-centered">
+                <h1> HR LESOTHO </h1>
+                <p>BOKAMOSO • TŠEBELISANO • KHOLISO</p>
+            </div>
+            <nav class="nav-centered">
+                <ul class="nav-links-centered">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="culture.html" class="active">COMPANY CULTURE</a></li>
+                    <li><a href="careers.html">CAREERS</a></li>
+                    <li><a href="benefits.html">BENEFITS</a></li>
+                    <li><a href="training.html">TRAINING</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Fancy Purple Hero Section -->
+        <section class="hero-culture">
+            <div class="container">
+                <h2> OUR CULTURE: WHERE HEARTS SHINE BRIGHT </h2>
+                <p> INNOVATION • INCLUSION • BOTHO • UBUNTU </p>
+                <p style="font-size: 1rem; margin-top: 15px;">💜 TOGETHER WE BUILD A WORKPLACE OF DREAMS 💜</p>
+            </div>
+        </section>
+
+        <!-- HORIZONTAL Staff Images Gallery - All Black People Images -->
+        <section class="container">
+            <div class="horizontal-staff">
+                <div class="horizontal-staff-card">
+                    <img src="C:\Users\Administrator\Desktop\hr-portal\images\Image 1.jpeg" alt="images">
+                    <h4> KEFUOE SHAI </h4>
+                    <p>Chief Culture Officer</p>
+                    <div class="role-badge"> CULTURE GUARDIAN </div>
+                    <div class="quote-text">"Building a culture of belonging for all Basotho"</div>
+                </div>
+                <div class="horizontal-staff-card">
+                    <img src="C:\Users\Administrator\Desktop\hr-portal\images\Image 2.jpeg" alt="images">
+                    <h4> KHOTHAZELE PHEKU </h4>
+                    <p>Culture Ambassador</p>
+                    <div class="role-badge"> HEART OF CULTURE </div>
+                    <div class="quote-text">"Celebrating our diverse heritage daily"</div>
+                </div>
+                <div class="horizontal-staff-card">
+                    <img src="C:\Users\Administrator\Desktop\hr-portal\images\Image 3.jpeg" alt="images">
+                    <h4> TSWANELO MASUPHA </h4>
+                    <p>DEI Coordinator</p>
+                    <div class="role-badge"> INCLUSION CHAMPION </div>
+                    <div class="quote-text">"Every voice matters, every story counts"</div>
+                </div>
+                <div class="horizontal-staff-card">
+                    <img src="C:\Users\Administrator\Desktop\hr-portal\images\Image 4.jpeg" alt="images">
+                    <h4> MAKALELA MONGALI </h4>
+                    <p>Wellness Coach</p>
+                    <div class="role-badge"> WELLBEING GUIDE </div>
+                    <div class="quote-text">"Healthy minds create healthy workplaces"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Culture Cards -->
+        <section class="container">
+            <div class="purple-card-grid">
+                <div class="purple-card">
+                    <img src="https://picsum.photos/id/169/400/250" alt="Open Communication">
+                    <div class="purple-card-content">
+                        <h3>💬 OPEN COMMUNICATION</h3>
+                        <p>Weekly all-hands meetings, transparent leadership, and anonymous feedback channels. Every voice is heard and valued at HR Lesotho.</p>
+                    </div>
+                </div>
+                <div class="purple-card">
+                    <img src="https://picsum.photos/id/91/400/250" alt="Diversity">
+                    <div class="purple-card-content">
+                        <h3>🌈 DIVERSITY & BELONGING</h3>
+                        <p>Celebrating Lesotho's rich cultural heritage with Employee Resource Groups and cultural celebrations throughout the year.</p>
+                    </div>
+                </div>
+                <div class="purple-card">
+                    <img src="https://picsum.photos/id/104/400/250" alt="Innovation">
+                    <div class="purple-card-content">
+                        <h3>💡 INNOVATION HUB</h3>
+                        <p>Creative thinking, new ideas, and continuous improvement are at the heart of our culture. We encourage bold thinking.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Culture Values List -->
+        <section class="container">
+            <div class="culture-values">
+                <h3> OUR CULTURAL PILLARS </h3>
+                <ul class="values-list">
+                    <li>🏆 <strong>RECOGNITION PROGRAMS</strong> - "Peer Awards" with quarterly bonuses and spotlight celebrations</li>
+                    <li>🧘 <strong>WELLNESS INITIATIVES</strong> - Weekly yoga sessions, mental health days, and meditation spaces</li>
+                    <li>🌱 <strong>COMMUNITY IMPACT</strong> - 16 hours/year paid volunteer time off for local Lesotho causes</li>
+                    <li>🎓 <strong>CONTINUOUS LEARNING</strong> - Internal workshops, book clubs, and skill-sharing sessions</li>
+                    <li>🍽️ <strong>TEAM CONNECTIONS</strong> - Monthly team lunches, virtual coffee chats, and offsite retreats</li>
+                    <li>💜 <strong>BOTHO SPIRIT</strong> - Ubuntu philosophy guiding our daily interactions and decisions</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- CENTERED FOOTER - BOLD CAPITAL TEXT -->
+    <footer class="centered-footer">
+        <div class="container footer-centered">
+            <p class="footer-main-text"> HR LESOTHO — WHERE CULTURE SHINES BRIGHT </p>
+            <p> BUILDING A WORKPLACE ROOTED IN BOTHO, UBUNTU, AND EXCELLENCE </p>
+            <div class="footer-links">
+                <a href="#">ABOUT OUR CULTURE</a>
+                <a href="#">DIVERSITY REPORT</a>
+                <a href="#">WELLNESS RESOURCES</a>
+                <a href="#">CONTACT CULTURE TEAM</a>
+            </div>
+            <p class="footer-copyright"> HEADQUARTERS: MASERU, LESOTHO | SERVING ALL DISTRICTS WITH PRIDE</p>
+            <p class="footer-copyright">© 2026 HR LESOTHO — TOGETHER WE GROW, TOGETHER WE SHINE</p>
+        </div>
+    </footer>
+
+    <script>
+        // Generate stars dynamically
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 350;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                const duration = Math.random() * 3 + 2;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Create larger decorative stars
+        function createBigStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfBigStars = 100;
+            
+            for (let i = 0; i < numberOfBigStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                const duration = Math.random() * 4 + 3;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Create shooting stars
+        function createShootingStars() {
+            setInterval(() => {
+                const body = document.body;
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.top = `${Math.random() * 60}%`;
+                shootingStar.style.left = `${Math.random() * 40}%`;
+                body.appendChild(shootingStar);
+                
+                setTimeout(() => {
+                    shootingStar.remove();
+                }, 3000);
+            }, 8000);
+        }
+        
+        createStars();
+        createBigStars();
+        createShootingStars();
+    </script>
+</body>
+</html>

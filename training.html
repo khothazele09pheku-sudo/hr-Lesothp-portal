@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Lesotho | Training & Development</title>
+    <style>
+        .training-page {
+            background: linear-gradient(135deg, #4a0e4e 0%, #7b2c7d 50%, #9b4d96 100%);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        @keyframes shoot { 0% { transform: translateX(-100px) translateY(-100px) rotate(45deg); opacity: 1; } 100% { transform: translateX(100vw) translateY(100vh) rotate(45deg); opacity: 0; } }
+        .shooting-star { position: fixed; width: 2px; height: 2px; background: linear-gradient(45deg, #ffd966, #ffaa33); box-shadow: 0 0 10px #ffd966; animation: shoot 3s linear infinite; pointer-events: none; z-index: 1; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        .centered-header { background: rgba(74, 14, 78, 0.95); backdrop-filter: blur(10px); padding: 20px 0; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #ffd966; }
+        .header-centered { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; }
+        .logo-centered h1 { color: #ffd966; font-size: 2rem; }
+        .logo-centered p { color: #ffdd99; font-size: 0.85rem; }
+        .nav-links-centered { display: flex; justify-content: center; gap: 35px; list-style: none; flex-wrap: wrap; }
+        .nav-links-centered a { color: white; text-decoration: none; font-weight: bold; text-transform: uppercase; padding: 8px 5px; border-bottom: 3px solid transparent; transition: 0.3s; }
+        .nav-links-centered a:hover, .nav-links-centered a.active { border-bottom-color: #ffd966; color: #ffd966; }
+
+        .hero { background: linear-gradient(135deg, #6a1b6e 0%, #9b2e96 50%, #c94fc1 100%); padding: 60px 0; text-align: center; border-bottom: 3px solid #ffd966; position: relative; z-index: 2; }
+        .hero h2 { font-size: 2.5rem; color: #ffdd99; }
+        .hero p { font-size: 1.2rem; color: white; }
+
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 20px; overflow: hidden; margin: 40px 0; position: relative; z-index: 2; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .horizontal-programs { display: flex; flex-direction: row; justify-content: center; gap: 30px; margin: 60px 0; flex-wrap: wrap; position: relative; z-index: 2; }
+        .program-card { background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,245,255,0.98) 100%); border-radius: 25px; padding: 25px; width: 280px; border: 2px solid #ffd966; transition: 0.3s; animation: float 4s ease-in-out infinite; }
+        .program-card:hover { transform: translateY(-10px); border-color: #ffaa66; }
+        .program-card h3 { color: #4a0e4e; font-size: 1.3rem; margin-bottom: 10px; }
+        .program-date { color: #ffaa33; font-weight: bold; margin: 8px 0; }
+
+        .horizontal-courses { display: flex; flex-direction: row; justify-content: center; gap: 35px; margin: 50px 0; flex-wrap: wrap; position: relative; z-index: 2; }
+        .course-card { background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,245,255,0.98) 100%); border-radius: 25px; padding: 20px; width: 280px; text-align: center; border: 2px solid #ffd966; }
+        .course-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; }
+        .course-card h3 { color: #4a0e4e; margin: 15px 0 10px; }
+
+        .external-links { background: linear-gradient(135deg, rgba(106,27,110,0.98) 0%, rgba(155,46,150,0.98) 100%); padding: 30px; border-radius: 25px; margin: 50px 0; text-align: center; border: 2px solid #ffd966; position: relative; z-index: 2; }
+        .external-links h3 { color: #ffd966; margin-bottom: 20px; }
+        .external-links ul { list-style: none; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+        .external-links a { color: white; text-decoration: none; font-weight: bold; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 50px; }
+
+        .centered-footer { background: linear-gradient(135deg, rgba(74,14,78,0.98) 0%, rgba(106,27,110,0.98) 100%); text-align: center; padding: 35px 0; margin-top: auto; border-top: 3px solid #ffd966; position: relative; z-index: 2; }
+        .footer-centered p { margin: 5px 0; font-weight: bold; text-transform: uppercase; color: white; }
+        .footer-main { font-size: 1.1rem; color: #ffd966; }
+        .footer-links { display: flex; justify-content: center; gap: 25px; margin: 15px 0; flex-wrap: wrap; }
+        .footer-links a { color: #ffdd99; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .main-content { flex: 1; }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.8rem; }
+            .program-card { width: 260px; }
+            .nav-links-centered { gap: 20px; }
+            .nav-links-centered a { font-size: 0.8rem; }
+        }
+        @media (max-width: 480px) {
+            .horizontal-programs { flex-direction: column; align-items: center; }
+            .horizontal-courses { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body class="training-page">
+    <div class="stars" id="stars"></div>
+
+    <header class="centered-header">
+        <div class="container header-centered">
+            <div class="logo-centered">
+                <h1>✨ HR LESOTHO ✨</h1>
+                <p>BOKAMOSO • TŠEBELISANO • KHOLISO</p>
+            </div>
+            <nav>
+                <ul class="nav-links-centered">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="culture.html">COMPANY CULTURE</a></li>
+                    <li><a href="careers.html">CAREERS</a></li>
+                    <li><a href="benefits.html">BENEFITS</a></li>
+                    <li><a href="training.html" class="active">TRAINING</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h2>🌟 TRAINING & DEVELOPMENT 🌟</h2>
+                <p>UPSKILL, RESKILL, LEAD — CONTINUOUS LEARNING CULTURE</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="video-wrapper">
+                <iframe src="C:\Users\Administrator\Desktop\hr-portal\videos\HR video.mp4" title="Leadership Training" allowfullscreen></iframe>
+            </div>
+
+            <div class="horizontal-programs">
+                <div class="program-card">
+                    <h3>LEADERSHIP ESSENTIALS</h3>
+                    <div class="program-date">📅 MARCH 10-12, 2025</div>
+                    <p>Foundational leadership skills for new managers and team leads.</p>
+                </div>
+                <div class="program-card">
+                    <h3>HR ANALYTICS</h3>
+                    <div class="program-date">📅 APRIL 5-7, 2025</div>
+                    <p>Leverage people analytics for strategic decision-making.</p>
+                </div>
+                <div class="program-card">
+                    <h3>AGILE FOR HR</h3>
+                    <div class="program-date">📅 APRIL 20-22, 2025</div>
+                    <p>Implement agile methodologies in HR operations.</p>
+                </div>
+                <div class="program-card">
+                    <h3>EMOTIONAL INTELLIGENCE</h3>
+                    <div class="program-date">📅 MAY 12, 2025</div>
+                    <p>Develop EQ skills for better collaboration.</p>
+                </div>
+            </div>
+
+            <div class="horizontal-courses">
+                <div class="course-card">
+                    <img src="https://picsum.photos/id/0/400/250" alt="Online Learning">
+                    <h3>MICRO-LEARNING LIBRARY</h3>
+                    <p>On-demand courses: negotiation, presentation skills, and more.</p>
+                </div>
+                <div class="course-card">
+                    <img src="https://picsum.photos/id/24/400/250" alt="Mentorship">
+                    <h3>MENTORSHIP PROGRAM</h3>
+                    <p>Connect with senior leaders for career guidance.</p>
+                </div>
+                <div class="course-card">
+                    <img src="https://picsum.photos/id/29/400/250" alt="Certification">
+                    <h3>CERTIFICATION SPONSORSHIP</h3>
+                    <p>Get sponsored for professional certifications.</p>
+                </div>
+            </div>
+
+            <div class="external-links">
+                <h3>🎯 LEARNING PARTNERS</h3>
+                <ul>
+                    <li><a href="https://www.linkedin.com/learning/" target="_blank">LINKEDIN LEARNING</a></li>
+                    <li><a href="https://www.coursera.org/" target="_blank">COURSERA</a></li>
+                    <li><a href="https://hbr.org/" target="_blank">HARVARD BUSINESS REVIEW</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="centered-footer">
+        <div class="container footer-centered">
+            <p class="footer-main">✨ HR LESOTHO — INVEST IN YOUR GROWTH ✨</p>
+            <p>💜 CONTINUOUS LEARNING FOR CONTINUOUS SUCCESS 💜</p>
+            <div class="footer-links">
+                <a href="#">TRAINING CALENDAR</a>
+                <a href="#">COURSE CATALOG</a>
+                <a href="#">CERTIFICATIONS</a>
+                <a href="#">CONTACT L&D</a>
+            </div>
+            <p>📍 HEADQUARTERS: MASERU, LESOTHO | LEARNING FOR ALL</p>
+            <p>© 2026 HR LESOTHO — TOGETHER WE GROW, TOGETHER WE SHINE</p>
+        </div>
+    </footer>
+
+    <script>
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 350; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                container.appendChild(star);
+            }
+        }
+        createStars();
+        setInterval(() => {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+            star.style.top = `${Math.random() * 60}%`;
+            star.style.left = `${Math.random() * 40}%`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 3000);
+        }, 8000);
+    </script>
+</body>
+</html>

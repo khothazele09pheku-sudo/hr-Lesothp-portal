@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Lesotho | Careers</title>
+    <style>
+        .careers-page {
+            background: linear-gradient(135deg, #4a0e4e 0%, #7b2c7d 50%, #9b4d96 100%);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        @keyframes shoot { 0% { transform: translateX(-100px) translateY(-100px) rotate(45deg); opacity: 1; } 100% { transform: translateX(100vw) translateY(100vh) rotate(45deg); opacity: 0; } }
+        .shooting-star { position: fixed; width: 2px; height: 2px; background: linear-gradient(45deg, #ffd966, #ffaa33); box-shadow: 0 0 10px #ffd966; animation: shoot 3s linear infinite; pointer-events: none; z-index: 1; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        .centered-header { background: rgba(74, 14, 78, 0.95); backdrop-filter: blur(10px); padding: 20px 0; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #ffd966; }
+        .header-centered { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; }
+        .logo-centered h1 { color: #ffd966; font-size: 2rem; }
+        .logo-centered p { color: #ffdd99; font-size: 0.85rem; }
+        .nav-links-centered { display: flex; justify-content: center; gap: 35px; list-style: none; flex-wrap: wrap; }
+        .nav-links-centered a { color: white; text-decoration: none; font-weight: bold; text-transform: uppercase; padding: 8px 5px; border-bottom: 3px solid transparent; transition: 0.3s; }
+        .nav-links-centered a:hover, .nav-links-centered a.active { border-bottom-color: #ffd966; color: #ffd966; }
+
+        .hero { background: linear-gradient(135deg, #6a1b6e 0%, #9b2e96 50%, #c94fc1 100%); padding: 60px 0; text-align: center; border-bottom: 3px solid #ffd966; position: relative; z-index: 2; }
+        .hero h2 { font-size: 2.5rem; color: #ffdd99; }
+        .hero p { font-size: 1.2rem; color: white; }
+
+        .horizontal-jobs { display: flex; flex-direction: row; justify-content: center; gap: 30px; margin: 60px 0; flex-wrap: wrap; position: relative; z-index: 2; }
+        .job-card { background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,245,255,0.98) 100%); border-radius: 25px; padding: 25px; width: 280px; border: 2px solid #ffd966; transition: 0.3s; animation: float 4s ease-in-out infinite; cursor: pointer; }
+        .job-card:hover { transform: translateY(-10px); border-color: #ffaa66; }
+        .job-card h3 { color: #4a0e4e; font-size: 1.3rem; margin-bottom: 10px; }
+        .job-location { color: #ffaa33; font-weight: bold; margin: 8px 0; }
+        .apply-btn { background: linear-gradient(135deg, #ffd966, #ffaa33); color: #4a0e4e; padding: 8px 20px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
+        .apply-btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #ffaa33, #ffd966); }
+
+        /* Application Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #fff 0%, #f8e8ff 100%);
+            border-radius: 30px;
+            padding: 35px;
+            width: 90%;
+            max-width: 500px;
+            border: 3px solid #ffd966;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.4s ease;
+        }
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            color: #4a0e4e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus {
+            border-color: #ffd966;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,217,102,0.3);
+        }
+        .modal-content textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .submit-application {
+            background: linear-gradient(135deg, #4a0e4e, #7b2c7d);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .submit-application:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #6a1b6e, #9b2e96);
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #4a0e4e;
+        }
+        .close-modal:hover {
+            color: #ffaa33;
+        }
+        .success-message {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+        .job-selected {
+            background: rgba(255,217,102,0.3);
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #4a0e4e;
+        }
+
+        .horizontal-cards { display: flex; flex-direction: row; justify-content: center; gap: 35px; margin: 50px 0; flex-wrap: wrap; position: relative; z-index: 2; }
+        .program-card { background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,245,255,0.98) 100%); border-radius: 25px; padding: 20px; width: 280px; text-align: center; border: 2px solid #ffd966; }
+        .program-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; }
+        .program-card h3 { color: #4a0e4e; margin: 15px 0 10px; }
+
+        .external-links { background: linear-gradient(135deg, rgba(106,27,110,0.98) 0%, rgba(155,46,150,0.98) 100%); padding: 30px; border-radius: 25px; margin: 50px 0; text-align: center; border: 2px solid #ffd966; position: relative; z-index: 2; }
+        .external-links h3 { color: #ffd966; margin-bottom: 20px; }
+        .external-links ul { list-style: none; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+        .external-links a { color: white; text-decoration: none; font-weight: bold; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 50px; }
+
+        .centered-footer { background: linear-gradient(135deg, rgba(74,14,78,0.98) 0%, rgba(106,27,110,0.98) 100%); text-align: center; padding: 35px 0; margin-top: auto; border-top: 3px solid #ffd966; position: relative; z-index: 2; }
+        .footer-centered p { margin: 5px 0; font-weight: bold; text-transform: uppercase; color: white; }
+        .footer-main { font-size: 1.1rem; color: #ffd966; }
+        .footer-links { display: flex; justify-content: center; gap: 25px; margin: 15px 0; flex-wrap: wrap; }
+        .footer-links a { color: #ffdd99; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .main-content { flex: 1; }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.8rem; }
+            .job-card { width: 260px; }
+            .nav-links-centered { gap: 20px; }
+            .nav-links-centered a { font-size: 0.8rem; }
+            .modal-content { padding: 25px; margin: 20px; }
+        }
+        @media (max-width: 480px) {
+            .horizontal-jobs { flex-direction: column; align-items: center; }
+            .horizontal-cards { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body class="careers-page">
+    <div class="stars" id="stars"></div>
+
+    <header class="centered-header">
+        <div class="container header-centered">
+            <div class="logo-centered">
+                <h1>✨ HR LESOTHO ✨</h1>
+                <p>BOKAMOSO • TŠEBELISANO • KHOLISO</p>
+            </div>
+            <nav>
+                <ul class="nav-links-centered">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="culture.html">COMPANY CULTURE</a></li>
+                    <li><a href="careers.html" class="active">CAREERS</a></li>
+                    <li><a href="benefits.html">BENEFITS</a></li>
+                    <li><a href="training.html">TRAINING</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h2>🌟 JOIN OUR TEAM 🌟</h2>
+                <p>SHAPE THE FUTURE WITH US — EXPLORE OPEN POSITIONS</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="horizontal-jobs">
+                <div class="job-card" data-job="HR BUSINESS PARTNER" data-location="MASERU">
+                    <h3>HR BUSINESS PARTNER</h3>
+                    <div class="job-location">📍 MASERU | FULL-TIME</div>
+                    <p>Drive people strategy across regions, partner with executive leadership.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('HR BUSINESS PARTNER', 'MASERU')">APPLY NOW →</button>
+                </div>
+                <div class="job-card" data-job="TALENT ACQUISITION" data-location="LERIBE">
+                    <h3>TALENT ACQUISITION</h3>
+                    <div class="job-location">📍 LERIBE | FULL-TIME</div>
+                    <p>Manage end-to-end recruitment for corporate roles, build talent pipelines.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('TALENT ACQUISITION', 'LERIBE')">APPLY NOW →</button>
+                </div>
+                <div class="job-card" data-job="TRAINING COORDINATOR" data-location="BUTH-BUTHE">
+                    <h3>TRAINING COORDINATOR</h3>
+                    <div class="job-location">📍 BUTH-BUTHE | FULL-TIME</div>
+                    <p>Create engaging training programs and facilitate workshops.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('TRAINING COORDINATOR', 'BUTH-BUTHE')">APPLY NOW →</button>
+                </div>
+                <div class="job-card" data-job="HR OPERATIONS" data-location="MASERU">
+                    <h3>HR OPERATIONS</h3>
+                    <div class="job-location">📍 MASERU | ENTRY LEVEL</div>
+                    <p>Support employee lifecycle processes and maintain HRIS data.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('HR OPERATIONS', 'MASERU')">APPLY NOW →</button>
+                </div>
+            </div>
+
+            <div class="horizontal-cards">
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/100/400/250" alt="Internship">
+                    <h3>INTERNSHIP PROGRAM</h3>
+                    <p>Paid summer internship with mentorship from industry leaders.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('INTERNSHIP PROGRAM', 'MASERU')">APPLY NOW →</button>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/101/400/250" alt="Graduate">
+                    <h3>GRADUATE PROGRAM</h3>
+                    <p>Two-year rotational program across all HR functions.</p>
+                    <button class="apply-btn" onclick="openApplicationForm('GRADUATE PROGRAM', 'MASERU')">APPLY NOW →</button>
+                </div>
+            </div>
+
+            <div class="external-links">
+                <h3>🤝 PARTNER ORGANIZATIONS</h3>
+                <ul>
+                    <li><a href="https://www.shrm.org/" target="_blank">SHRM</a></li>
+                    <li><a href="https://www.hrci.org/" target="_blank">HRCI</a></li>
+                    <li><a href="https://www.linkedin.com/learning/" target="_blank">LINKEDIN LEARNING</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="centered-footer">
+        <div class="container footer-centered">
+            <p class="footer-main">✨ HR LESOTHO — BUILD YOUR CAREER WITH US ✨</p>
+            <p>💜 EQUAL OPPORTUNITY EMPLOYER — WE CELEBRATE DIVERSITY 💜</p>
+            <div class="footer-links">
+                <a href="#">CAREERS</a>
+                <a href="#">INTERNSHIPS</a>
+                <a href="#">CONTACT RECRUITMENT</a>
+                <a href="#">FAQ</a>
+            </div>
+            <p>📍 HEADQUARTERS: MASERU, LESOTHO | SERVING ALL DISTRICTS</p>
+            <p>© 2026 HR LESOTHO — TOGETHER WE GROW, TOGETHER WE SHINE</p>
+        </div>
+    </footer>
+
+    <!-- Application Modal -->
+    <div id="applicationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>📝 JOB APPLICATION</h2>
+            <div id="selectedJobDisplay" class="job-selected"></div>
+            <form id="applicationForm" onsubmit="submitApplication(event)">
+                <input type="text" id="fullName" placeholder="FULL NAME *" required>
+                <input type="email" id="email" placeholder="EMAIL ADDRESS *" required>
+                <input type="tel" id="phone" placeholder="PHONE NUMBER *" required>
+                <input type="text" id="location" placeholder="YOUR LOCATION (CITY/DISTRICT) *" required>
+                <select id="experience" required>
+                    <option value="">YEARS OF EXPERIENCE *</option>
+                    <option value="0-1">0-1 Year</option>
+                    <option value="1-3">1-3 Years</option>
+                    <option value="3-5">3-5 Years</option>
+                    <option value="5-10">5-10 Years</option>
+                    <option value="10+">10+ Years</option>
+                </select>
+                <textarea id="coverLetter" placeholder="WHY DO YOU WANT TO JOIN US? (COVER LETTER) *" required></textarea>
+                <input type="hidden" id="jobPosition" value="">
+                <button type="submit" class="submit-application">SUBMIT APPLICATION ✨</button>
+                <div id="successMessage" class="success-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentJob = "";
+
+        function openApplicationForm(jobTitle, location) {
+            currentJob = jobTitle;
+            document.getElementById('jobPosition').value = jobTitle;
+            document.getElementById('selectedJobDisplay').innerHTML = `📌 APPLYING FOR: <strong>${jobTitle}</strong> (${location})`;
+            document.getElementById('applicationModal').style.display = 'flex';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('applicationForm').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('applicationModal').style.display = 'none';
+        }
+
+        function submitApplication(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const experience = document.getElementById('experience').value;
+            const coverLetter = document.getElementById('coverLetter').value;
+            const jobPosition = document.getElementById('jobPosition').value;
+            
+            // Save application to localStorage (so applications are stored)
+            const application = {
+                id: Date.now(),
+                job: jobPosition,
+                name: fullName,
+                email: email,
+                phone: phone,
+                location: location,
+                experience: experience,
+                coverLetter: coverLetter,
+                appliedDate: new Date().toLocaleString()
+            };
+            
+            // Get existing applications from localStorage
+            let applications = JSON.parse(localStorage.getItem('hrApplications')) || [];
+            applications.push(application);
+            localStorage.setItem('hrApplications', JSON.stringify(applications));
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.innerHTML = `✅ APPLICATION SUBMITTED SUCCESSFULLY!<br><br>Thank you ${fullName}! Your application for <strong>${jobPosition}</strong> has been received. Our HR team will contact you within 5-7 working days.`;
+            successMsg.style.display = 'block';
+            
+            // Clear form
+            document.getElementById('applicationForm').reset();
+            
+            // Close modal after 5 seconds
+            setTimeout(() => {
+                closeModal();
+            }, 5000);
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('applicationModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 350; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                container.appendChild(star);
+            }
+        }
+        createStars();
+        setInterval(() => {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+            star.style.top = `${Math.random() * 60}%`;
+            star.style.left = `${Math.random() * 40}%`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 3000);
+        }, 8000);
+    </script>
+</body>
+</html>
